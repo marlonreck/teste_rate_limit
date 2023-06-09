@@ -1,4 +1,4 @@
-Teste ou descubra o limite de taxa de qualquer URL com este script.
+Teste e descubra o limite de taxa de qualquer URL com este script.
 
 	usage: rate_limit.py [-h] -u URL -r REQUEST
 	
