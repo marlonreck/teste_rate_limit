@@ -4,7 +4,7 @@
 Created on Wed Jun  7 11:43:25 2023
 
 @author: Marlon V. Reck
-e-mail: marlon.reck@cresol.coop.br
+e-mail: marlonreck@gmail.com
 Linkedin: https://br.linkedin.com/in/marlonreck
 
 Version: 0.1
