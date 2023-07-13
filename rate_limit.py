@@ -12,34 +12,35 @@ Description: Teste de rate limits
 Requirement: aiohttp asyncio time datetime nest_asyncio argparse
 """
 
-import aiohttp
 import asyncio
 import time
 import datetime
-import nest_asyncio
+import aiohttp
 import argparse
+import nest_asyncio
 
 nest_asyncio.apply()
 
-'''
+"""
 Por design, o asyncio não permite que seu loop de eventos seja aninhado.
-Isso apresenta um problema prático: quando em um ambiente em que o loop de 
-eventos já está em execução, é impossível executar tarefas e aguardar o 
+Isso apresenta um problema prático: quando em um ambiente em que o loop de
+eventos já está em execução, é impossível executar tarefas e aguardar o
 resultado.
 Tentar fazer isso dará o erro:
     “RuntimeError: Este loop de eventos já está em execução”.
 
-O problema aparece em vários ambientes, como servidores da Web, 
+O problema aparece em vários ambientes, como servidores da Web,
 aplicativos GUI e em notebooks Jupyter.
-Este módulo corrige o asyncio para permitir o uso aninhado de asyncio.run 
+Este módulo corrige o asyncio para permitir o uso aninhado de asyncio.run
 e loop.run_until_complete.
-'''
+"""
 
 start_time = time.time()
 
 async def resp_status(session, url):
     atual = datetime.datetime.now().strftime("%H:%M:%S:%f")
-    async with session.get(url, ssl=False) as resp:
+    meu_headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'}
+    async with session.get(url, headers=meu_headers, ssl=False) as resp:
         return (resp.status, atual)
 
 async def get_url(url,n):
@@ -70,6 +71,6 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--request', dest='request', action = 'store',
                         type=int, default=1, required = True,
                         help = 'Informe o número de requisições que será feita.')
-    
+
     argumento = parser.parse_args()
     asyncio.run(get_url(argumento.url, argumento.request))
